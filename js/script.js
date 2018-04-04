@@ -1,8 +1,6 @@
 
 $(document).ready(function() {
 
-
-
     $("#get-data").on("click", function() {
 
         $.getJSON("control/ajax-handler.php?data=rides", function(data){
