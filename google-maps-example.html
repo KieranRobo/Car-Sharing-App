@@ -9,44 +9,23 @@
             width: 100%;
         }
     </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+    <script type="text/javascript" src="js/google-maps.js"></script>
 </head>
 <body>
 <h3>Google Maps Example</h3>
 <p>Click on a location to add a marker:</p>
+
+<p>Search for location:</p>
+<input type="text" name="search" id="search" />
+<button id="search_button">Search</button>
+
 <div id="map"></div>
-<script>
+<div id="map2"></div>
 
-    var map;
-    var marker;
-
-    function initMap() {
-        var uluru = {lat: 55.864304, lng: -4.251686};
-        map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 11,
-            center: uluru
-        });
-
-        map.addListener('click', function(event) {
-
-            marker = new google.maps.Marker({
-                position: event.latLng,
-                map: map
-            });
-
-            marker = new google.maps.Marker({
-                position: {
-                    lat: parseFloat(document.getElementById('lat').value),
-                    lng: parseFloat(document.getElementById('lng').value)
-                },
-                map: map
-            });
-        });
-    }
-
-
-</script>
 <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNgPG8RxuadW9QL-D3x3Rk4iT_ghLIAdE&callback=initMap">
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNgPG8RxuadW9QL-D3x3Rk4iT_ghLIAdE&callback=initMap&libraries=places">
 </script>
 </body>
 </html>
