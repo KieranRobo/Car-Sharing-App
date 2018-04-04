@@ -30,24 +30,70 @@ $(document).ready(function(){
         }
         else
             sLabel.style.color = "Black";
-        /* TODO: Check email and password */
+        //TODO: Check email contains @, decided on password regex
         if(passwordLabel.value === "" || emailLabel.value === "")
             allFieldsCorrect = false;
 
         /*Posting to php*/
         if(allFieldsCorrect){
             var newUserData = "forename=" + forename + "&surname=" + surname + "&email=" + email + "&password=" + password;
-
             $.ajax({
                 type: "POST",
                 url: "control/register-handler.php",
                 data: newUserData,
                 success: function (data) {
                     console.log(data);
+                    if(data === "success"){
+                        window.location.replace("https://devweb2017.cis.strath.ac.uk/~xsb15119/car-sharing/index.php");
+                    }
+                    else {
+                        var code = data.charAt(1);
+                        var field = data.charAt(0);
+                       switch (code){
+                           case '0':
+                               switch (field){
+                                   case 'e':
+                                       emailLabel.style.color = "Red";
+                                       emailLabel.append("Cannot be empty.");
+                                       break;
+                                   case 'f':
+                                       fLabel.style.color = "Red";
+                                       fLabel.append("Cannot be empty.");
+                                       break;
+                                   case 's':
+                                       sLabel.style.color = "Red";
+                                       sLabel.append("Cannot be empty.");
+                                       break;
+                                   case 'p':
+                                       passwordLabel.style.color = "Red";
+                                       break;
+                               }
+                               break;
+                           case '1':
+                               switch (field){
+                                   case 'e':
+                                       emailLabel.style.color = "Red";
+                                       if(emailLabel.innerText.search(' Email already in use.') === -1)
+                                           emailLabel.append(" Email already in use.");
+                                       break;
+                                   case 'f':
+                                       fLabel.style.color = "Red";
+                                       if(fLabel.innerText.search(' Contains non-letters') === -1)
+                                         fLabel.append(" Contains non-letters.");
+                                       break;
+                                   case 's':
+                                       sLabel.style.color = "Red";
+                                       if(sLabel.innerText.search(' Contains non-letters') === -1)
+                                           emailLabel.append(" Contains non-letters.");
+
+                               }
+                       }
+
+                    }
+
                 }
             });
         }
-
 
     });
 });
