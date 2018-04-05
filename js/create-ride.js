@@ -2,18 +2,36 @@ var map;
 var marker;
 
 var setoffMap, destinationMap;
-var setoffCoords, desintationCoords;
 
 $(document).ready(function() {
     setoffMap = null;
     destinationMap = null;
     marker = null;
 
+    var setoffLat, setoffLng;
+    var destinationLat, destinationLng;
+    var rideDestription;
+
     $("#location-selection").hide();
     $("#confirmation").hide();
 
+    // Go from ride info screen to location selections
     $("#continue").on("click", function () {
         $("#ride-information").hide();
+        $("#location-selection").show();
+
+        rideDestription = $("#description").val();
+    });
+
+    // Go back from map to initial information screen
+    $("#back2").on("click", function () {
+        $("#location-selection").hide();
+        $("#ride-information").show()
+    });
+
+    // Go back from confirmation to map
+    $("#back3").on("click", function () {
+        $("#confirmation").hide();
         $("#location-selection").show();
     });
 
@@ -27,17 +45,46 @@ $(document).ready(function() {
             if (destinationMap == null) {
                 $("#instruction-area").html("Finally, select your <strong>destination:</strong>");
 
-                setoffCoords = marker.getPosition().lat();
+                setoffLat = marker.getPosition().lat();
+                setoffLng = marker.getPosition().lng();
                 destinationMap = initMap();
             } else {
-                desintationCoords = marker.getPosition().lat();
+                destinationLat = marker.getPosition().lat();
+                destinationLng = marker.getPosition().lng();
 
                 $("#location-selection").hide();
+
+                $("#confirmation-leaving-from").text("LAT: " + setoffLat + " LNG: " + setoffLng);
+                $("#confirmation-going-to").text("LAT: " + destinationLat + " LNG: " + destinationLng);
+                $("#confirmation-description").text(rideDestription);
+
                 $("#confirmation").show();
 
                 //$("#content-area").html("Added ride information<br> SETOFF: " + setoffCoords + "<br>DEST: " + desintationCoords);
             }
         }
+
+    });
+
+    $("#confirm").on("click", function () {
+
+        // AJAX to create ride
+        var postData = {
+            setoffLat: setoffLat,
+            setoffLng: setoffLng,
+            destLat: destinationLat,
+            destLng: destinationLng,
+            description: rideDestription};
+
+        $.post("control/create-ride-handler.php",
+            postData,
+            function(response, status) {
+            if (response == '1') {
+                $("#content-area").html("Successfully added ride. <a href='ajax-example.html'>check</a>");
+            } else {
+                $("#content-area").html("Error whilst trying to add ride.");
+            }
+            });
 
     });
 });
