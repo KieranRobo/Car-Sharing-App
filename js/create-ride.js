@@ -9,6 +9,14 @@ $(document).ready(function() {
     destinationMap = null;
     marker = null;
 
+    $("#location-selection").hide();
+    $("#confirmation").hide();
+
+    $("#continue").on("click", function () {
+        $("#ride-information").hide();
+        $("#location-selection").show();
+    });
+
     $("#submit-button").on("click", function () {
 
         if (marker == null) {
@@ -23,9 +31,12 @@ $(document).ready(function() {
                 destinationMap = initMap();
             } else {
                 desintationCoords = marker.getPosition().lat();
-                $("#content-area").html("Added ride information<br> SETOFF: " + setoffCoords + "<br>DEST: " + desintationCoords);
-            }
 
+                $("#location-selection").hide();
+                $("#confirmation").show();
+
+                //$("#content-area").html("Added ride information<br> SETOFF: " + setoffCoords + "<br>DEST: " + desintationCoords);
+            }
         }
 
     });
@@ -58,6 +69,14 @@ this.initMap = function () {
         });
     });
 
+    if (marker != null) {
+        new google.maps.Marker({
+            position: marker.getPosition(),
+            draggable:true,
+            map: map
+        });
+    }
+
     map.addListener('click', function (event) {
         moveMarker(event.latLng);
     });
@@ -71,6 +90,7 @@ this.moveMarker = function (coords) {
     }
     marker = new google.maps.Marker({
         position: coords,
+        draggable:true,
         map: map
     });
 };

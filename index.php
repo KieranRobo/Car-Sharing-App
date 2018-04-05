@@ -10,6 +10,6 @@ session_start();
     <br>
     <div id="userBar"></div>
     <a href="ajax-example.html" />AJAX Example</a><br>
-    <a href="google-maps-example.html" />Google Maps Example</a><br>
+    <a href="create-ride.html" />Create Ride</a><br>
 
 </html>

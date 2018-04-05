@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<title>Google Maps Example</title>
+<head>
+
+    <style>
+        #map {
+            height: 40em;
+            width: 100%;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script type="text/javascript" src="js/create-ride.js"></script>
+</head>
+<body>
+<h3>Google Maps Example</h3>
+<div id="content-area">
+
+    <div id="ride-information">
+        <p>Before selecting route details of your ride, please provide some details to help others decide if
+        this ride is right for them:</p>
+        Time you are leaving at: <input type="text" id="time" /><br>
+        Details about your ride (requirements, need-to-knows etc):<br> <textarea id="description"></textarea><br>
+        Vehicle: <input type="text" id="vehicle" /><br>
+        <button id="continue">Continue</button>
+    </div>
+
+    <div id="location-selection">
+        <p id="instruction-area">Please select your <strong>pick-up point</strong>:</p>
+
+        <input type="text" name="search" id="search" />
+        <button id="search_button">Search</button>
+
+        <div id="map"></div>
+
+        <button id="submit-button">Submit</button>
+    </div>
+
+    <div id="confirmation">
+        <p>Please confirm the following information about your ride is correct:</p>
+
+        <p>Leaving from: <div id="confirmation-leaving-from"></div></p>
+        <p>At: <div id="confirmation-time"></div></p>
+        <p>Going to: <div id="confirmation-going-to"></div></p>
+        <p>With Vehicle: <div id="confirmation-vehicle"></div></p>
+        <p>Further Details:<br> <div id="confirmation-description"></div></p>
+
+        <button id="confirm">These Details Are Correct</button>
+        <button id="back">Go Back</button>
+    </div>
+
+</div>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNgPG8RxuadW9QL-D3x3Rk4iT_ghLIAdE&callback=initMap&libraries=places">
+</script>
+</body>
+</html>
