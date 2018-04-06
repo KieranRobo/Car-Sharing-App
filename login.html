@@ -13,10 +13,7 @@
 </head>
 <body>
 
-<!-- Start of first page: #one -->
 <div data-role="page" id="one">
-
-
     <div id="content" align="center">
         <h1 align="center">Login</h1>
         <form id="loginForm" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="off">
@@ -25,26 +22,17 @@
             <label for="password">Password:</label>
             <input id="password" type="password" placeholder="Password"/>
             <button id="login">Login</button>
+            <!-- To trigger popup -->
             <a href="#popup" data-rel="popup" data-transition="pop" id="pTrigger" data-position-to="#position"> </a>
 
         </form>
     </div>
+
+    <!-- Where error content gets appeneded to -->
     <div data-role="popup" id="popup">
         <p id="errors"></p>
         <p id="pErr"></p>
     </div>
 </div>
-
-<!--/page one-->
-
-<!-- Start of second page: #two -->
-<<div data-role="page" id="two">
-    <h2>Two</h2>
-    <p>Hello there</p>
-</div>
-<!--/page two-->
-
-
-
 </body>
 </html>
