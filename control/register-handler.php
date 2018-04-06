@@ -6,7 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $validInput = true;
 
     /* Checking forename and surname */
-    if (!isset($_POST['forename']) && !empty($_POST['forename'])) {
+    if (!isset($_POST['forename']) || empty($_POST['forename'])) {
         $forenameErr .= "f0";
         $validInput = false;
     } else {
@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $validInput = false;
         }
     }
-    if(!isset($_POST['surname']) && !empty($_POST['surname'])) {
+    if(!isset($_POST['surname']) || empty($_POST['surname'])) {
         $surnameErr = "s0";
         $validInput = false;
     } else {
@@ -28,31 +28,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     /* Checking email */
-    if(!isset($_POST['email']) && !empty($_POST['email']))
+    if(!isset($_POST['email']) || empty($_POST['email']))
         $emailErr = "e0";
     else{
-        /*Checking if email is already registered*/
-        $stmt = $conn->prepare("SELECT email FROM users WHERE email = ?");
-        if(!$stmt->bind_param('s', $_POST['email']))
-            echo "fail";
-        else{
-            $stmt->execute();
-            if($stmt->bind_result($emails)){
-                $stmt->fetch();
-                $stmt->close();
-                if(!empty($emails)){
-                    $emailErr .= "e1";
-                    $validInput = false;
-                }
-            }else{
+        if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
+            $emailErr = "e2";
+            $validInput = false;
+        }else{
+            /*Checking if email is already registered*/
+            $stmt = $conn->prepare("SELECT email FROM users WHERE email = ?");
+            if(!$stmt->bind_param('s', $_POST['email']))
                 echo "fail";
-            }
+            else{
+                $stmt->execute();
+                if($stmt->bind_result($emails)){
+                    $stmt->fetch();
+                    $stmt->close();
+                    if(!empty($emails)){
+                        $emailErr .= "e1";
+                        $validInput = false;
+                    }
+                }else{
+                    echo "fail";
+                }
 
+            }
         }
     }
-    if(!isset($_POST['password']) && !empty($_POST['password']))
+    if(!isset($_POST['password']) || empty($_POST['password']))
         $passwordErr = "p0";
-    //TODO: Check email contains @, decided on password regex
 
     if(!$validInput)
         echo $forenameErr . $passwordErr . $emailErr . $surnameErr ;
@@ -68,31 +72,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if(!$stmt->bind_param('sssss', $id,$email, $password, $forename, $surname))
             echo "err";
         else {
-            if($stmt->execute()){
-                $stmt->close();
-                echo "success";
-                /* Set session variable */
-                $stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
-                if($stmt->bind_param('s', $email)){
-                    $stmt->execute();
-                    /* Sucessfully got result */
-                    if($stmt->bind_result($id)){
-                        $stmt->fetch();
-                        $stmt->close();
-                        if(!empty($id)){
-                            $_SESSION['userID'] = $id;
-                        }
-                    }
-                }else{
-                    echo "error preparing";
-                }
-            }
-            else{
-                echo "err";
-                $stmt->close();
-
-            }
-
+           $stmt->execute();
+           $stmt->close();
+           $stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
+           $stmt->bind_param('s', $email);
+           $stmt->execute();
+           $stmt->bind_result($id);
+           $stmt->fetch();
+           $stmt->close();
+           echo "success";
+           if(!empty($id)){
+               $_SESSION['userID'] = $id;
+           }
         }
 
     }

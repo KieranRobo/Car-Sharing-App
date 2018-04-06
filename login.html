@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <link rel="stylesheet" href="css/style.css"/>
+    <script type="text/javascript" src="js/login.js"></script>
+
+</head>
+<body>
+
+<!-- Start of first page: #one -->
+<div data-role="page" id="one">
+
+
+    <div id="content" align="center">
+        <h1 align="center">Login</h1>
+        <form id="loginForm" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="off">
+            <label id="emailLabel" for="email">Email:</label>
+            <input id="email" type="text" placeholder="Email Address" />
+            <label for="password">Password:</label>
+            <input id="password" type="password" placeholder="Password"/>
+            <button id="login">Login</button>
+            <a href="#popup" data-rel="popup" data-transition="pop" id="pTrigger" data-position-to="#position"> </a>
+
+        </form>
+    </div>
+    <div data-role="popup" id="popup">
+        <p id="errors"></p>
+        <p id="pErr"></p>
+    </div>
+</div>
+
+<!--/page one-->
+
+<!-- Start of second page: #two -->
+<<div data-role="page" id="two">
+    <h2>Two</h2>
+    <p>Hello there</p>
+</div>
+<!--/page two-->
+
+
+
+</body>
+</html>
