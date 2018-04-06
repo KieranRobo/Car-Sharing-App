@@ -1,28 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
     <title>Register</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     <script type="text/javascript" src="js/register.js"></script>
 </head>
 <body>
-    <h1>Register</h1>
-    <div>
+<div data-role="page">
+    <div data-role="header">
+        <h1>Register</h1>
+    </div>
+    <div data-role="content">
         <label id="fNameLabel">Forename:
             <input type="text" id="forename"/>
         </label>
         <br><label id="sNameLabel">Surname:
-            <input type="text" id="surname"/>
-        </label>
+        <input type="text" id="surname"/>
+    </label>
         <br><label id="emailLabel">Email:
-            <input type="text" id="email"/>
-        </label>
+        <input type="text" id="email"/>
+    </label>
         <br><label id="passwordLabel">
-            Password:
-            <input type="password" id="password"/>
-        </label>
+        Password:
+        <input type="password" id="password"/>
+    </label>
         <button id="submit-new-user">Submit</button>
     </div>
+
+</div>
+
 </body>
 </html>

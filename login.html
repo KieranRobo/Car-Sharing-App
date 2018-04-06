@@ -14,8 +14,11 @@
 <body>
 
 <div data-role="page" id="one">
-    <div id="content" align="center">
-        <h1 align="center">Login</h1>
+    <div data-role="header">
+        <h1>Login</h1>
+    </div>
+    <div data-role="content" id="content" align="center">
+
         <form id="loginForm" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="off">
             <label id="emailLabel" for="email">Email:</label>
             <input id="email" type="text" placeholder="Email Address" />
@@ -24,6 +27,7 @@
             <button id="login">Login</button>
             <!-- To trigger popup -->
             <a href="#popup" data-rel="popup" data-transition="pop" id="pTrigger" data-position-to="#position"> </a>
+            <a href="register.html" data-rel="dialog" class="ui-shadow ui-btn ui-corner-all"  data-transition="pop">Click Here to Register</a>
 
         </form>
     </div>
