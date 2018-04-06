@@ -1,16 +1,15 @@
-$(document).ready(function () {
-
-    $("#submit-new-user").on("click", function () {
+   $("#submit-new-user").on("click", function () {
+        event.preventDefault();
         /* Getting input box values */
         var forename = document.getElementById("forename").value;
         var surname = document.getElementById("surname").value;
-        var email = document.getElementById("email").value;
-        var password = document.getElementById("password").value;
+        var email = document.getElementById("emailReg").value;
+        var password = document.getElementById("passwordReg").value;
         /* Labels */
         var fLabel = document.getElementById("fNameLabel");
         var sLabel = document.getElementById("sNameLabel");
-        var emailLabel = document.getElementById("emailLabel");
-        var passwordLabel = document.getElementById("passwordLabel");
+        var emailLabel = document.getElementById("emailLabelReg");
+        var passwordLabel = document.getElementById("passwordLabelReg");
 
         /*Posting to php*/
         var newUserData = "forename=" + forename + "&surname=" + surname + "&email=" + email + "&password=" + password;
@@ -19,8 +18,9 @@ $(document).ready(function () {
             url: "control/register-handler.php",
             data: newUserData,
             success: function (data) {
+                console.log(data);
                 if (data === "success") {
-                    window.location.replace("https://devweb2017.cis.strath.ac.uk/~xsb15119/car-sharing/index.php");
+                    $.mobile.navigate("home.html");
                 }
                 else {
                     for(var i=0; i<data.length; i+=2){
@@ -70,8 +70,8 @@ $(document).ready(function () {
                                 break;
                             case '2':
                                 emailLabel.style.color = "Red";
-                                if (emailLabel.innerText.search(' Not a valid email.') === -1)
-                                    emailLabel.append(' Not a valid email.');
+                                if (emailLabel.innerText.search('Not a valid email.') === -1)
+                                    emailLabel.append('Not a valid email.');
                                 break;
                         }
                     }
@@ -85,4 +85,3 @@ $(document).ready(function () {
 
 
     });
-});

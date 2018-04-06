@@ -26,7 +26,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $validInput = false;
         }
     }
-
     /* Checking email */
     if(!isset($_POST['email']) || empty($_POST['email']))
         $emailErr = "e0";
