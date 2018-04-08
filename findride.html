@@ -4,50 +4,20 @@
     <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
     <link rel="stylesheet" href="css/style.css">
     <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script type="text/javascript">
-        $(document).on('pageinit', function() {
-                $.ajax({
-                    type: 'POST',
-                    url: 'control/login-handler.php',
-                    success: function (data) {
-                        if (data !== 'already logged in') {
-                            $.mobile.navigate("login.html");
-                        }
-                    }
-                });
-
-                $('#findcontent').swipeleft(function () {
-                    console.log("to active rides");
-                    $.mobile.changePage("activerides.html");
-                });
-                $('#findcontent').swiperight(function () {
-                    console.log("to create rides");
-                    $.mobile.changePage("create-ride.html");
-                });
-                $('#activecontent').swiperight(function () {
-                    console.log("to find ride");
-                    $.mobile.changePage("findride.html");
-                });
-
-
-
-
-
-
-
-        });
-    </script>
+    <script type="text/javascript" src="js/checkLoggedIn.js"></script>
     <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 
 
 </head>
 <body>
+
 <!-- Find a ride page start -->
 <div data-role="page" id="find-a-ride">
 
     <div data-role="header" class="ui" data-position="fixed">
         <h1>Car Sharing</h1>
-        <a href="#" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right">Account</a>
+        <a href="#" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right logout">Logout</a>
+
     </div>
 
 
@@ -65,11 +35,16 @@
     <div id="findcontent" role="main" align="center" class="ui-content content">
        <p id>Find A Ride</p>
     </div>
-    <div data-role="footer" data-position="fixed">
-        hi
+    <div class="footer" data-role="footer" data-position="fixed">
+       Click to access Account
     </div>
+    <script type="text/javascript" src="js/swipe.js"></script>
+    <script type="text/javascript" src="js/logout.js"></script>
+
+
 </div>
 <!-- /find a ride -->
+
 
 </body>
 

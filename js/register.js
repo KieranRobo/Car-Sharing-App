@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    event.preventDefault();
     $.ajax({
         type: 'POST',
         url: 'control/login-handler.php',
@@ -10,7 +11,6 @@ $(document).ready(function() {
     });
 
     $("#submit-new-user").on("click", function () {
-        event.preventDefault();
         /* Getting input box values */
         var forename = document.getElementById("forename").value;
         var surname = document.getElementById("surname").value;
