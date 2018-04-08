@@ -14,6 +14,7 @@ $(document).ready(function() {
 
     $("#location-selection").hide();
     $("#confirmation").hide();
+    $("#success").hide();
 
     // Go from ride info screen to location selections
     $("#continue").on("click", function () {
@@ -76,11 +77,13 @@ $(document).ready(function() {
             destLng: destinationLng,
             description: rideDestription};
 
+
+        $("#confirmation").hide();
         $.post("control/create-ride-handler.php",
             postData,
             function(response, status) {
             if (response == '1') {
-                $("#content-area").html("Successfully added ride. <a href='ajax-example.html'>check</a>");
+                $("#success").show();
             } else {
                 $("#content-area").html("Error whilst trying to add ride.");
             }
