@@ -4,21 +4,7 @@
     <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
     <link rel="stylesheet" href="css/style.css">
     <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script type="text/javascript">
-        $(document).one('pageinit', function () {
-            $.ajax({
-                type: 'POST',
-                url: 'control/login-handler.php',
-                data: 'getLogin=true',
-                success: function (data) {
-                    if (data !== 'already logged in') {
-                        console.log("woo");
-                        $.mobile.changePage("login.html");
-                    }
-                }
-            });
-        });
-    </script>
+    <script type="text/javascript" src="js/checkLoggedIn.js"></script>
     <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 
 
@@ -30,7 +16,7 @@
 
     <div data-role="header" class="ui" data-position="fixed">
         <h1>Car Sharing</h1>
-        <a href="#" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right">Account</a>
+
     </div>
 
 
@@ -48,8 +34,9 @@
     <div id="findcontent" role="main" align="center" class="ui-content content">
        <p id>Find A Ride</p>
     </div>
-    <div data-role="footer" data-position="fixed">
-  </div>
+    <div class="footer" data-role="footer" data-position="fixed">
+       Click to access Account
+    </div>
     <script type="text/javascript" src="js/swipe.js"></script>
 
 </div>
