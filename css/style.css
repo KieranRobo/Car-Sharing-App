@@ -3,6 +3,11 @@
     justify-content: center;
 }
 
+#registerForm{
+    padding: 1em;
+}
+
+
 .ui-content{
     padding: 0;
     position: absolute;
