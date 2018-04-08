@@ -24,6 +24,8 @@
 <div data-role="page" id="active-rides">
     <div data-role="header" class="ui" data-position="fixed">
         <h1>Car Sharing</h1>
+        <a href="#" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right logout">Logout</a>
+
     </div>
     <div data-role="navbar">
         <ul id="nav">
@@ -33,7 +35,7 @@
 
         </ul>
     </div><!-- /navbar -->
-    <div id="activecontent" role="main" align="center" class="ui-content">
+    <div id="createcontent" role="main" align="center" class="ui-content">
         <div id="content-area">
 
             <div id="ride-information">
@@ -88,6 +90,8 @@
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNgPG8RxuadW9QL-D3x3Rk4iT_ghLIAdE&callback=initMap&libraries=places">
     </script>
+    <script type="text/javascript" src="js/logout.js"></script>
+    <script type="text/javascript" src="js/swipe.js"></script>
 
 </div>
 
