@@ -1,4 +1,15 @@
-   $("#submit-new-user").on("click", function () {
+$(document).ready(function() {
+    $.ajax({
+        type: 'POST',
+        url: 'control/login-handler.php',
+        success: function (data) {
+            if(data === 'already logged in'){
+                $.mobile.navigate("findride.html");
+            }
+        }
+    });
+
+    $("#submit-new-user").on("click", function () {
         event.preventDefault();
         /* Getting input box values */
         var forename = document.getElementById("forename").value;
@@ -20,11 +31,11 @@
             success: function (data) {
                 console.log(data);
                 if (data === "success") {
-                    $.mobile.navigate("home.html");
+                    $.mobile.navigate("findride.html");
                 }
                 else {
-                    for(var i=0; i<data.length; i+=2){
-                        var code = data.charAt(i+1);
+                    for (var i = 0; i < data.length; i += 2) {
+                        var code = data.charAt(i + 1);
                         var field = data.charAt(i);
                         switch (code) {
                             case '0':
@@ -77,7 +88,6 @@
                     }
 
 
-
                 }
 
             }
@@ -85,3 +95,4 @@
 
 
     });
+});

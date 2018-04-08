@@ -1,5 +1,16 @@
 
 $(document).ready(function(){
+
+    $.ajax({
+        type: 'POST',
+        url: 'control/login-handler.php',
+        success: function (data) {
+            if(data === 'already logged in'){
+                $.mobile.changePage("findride.html", {transition: "slide", reloadPage: true});
+            }
+        }
+    });
+
     $('#login').on("click", function () {
         event.preventDefault();
         var email = document.getElementById("email").value;
@@ -33,7 +44,7 @@ $(document).ready(function(){
                 success: function (data) {
                     console.log(data);
                     if(data === "success"){
-                        $.mobile.navigate("home.html");
+                        $.mobile.navigate("findride.html");
                     }
                     else {
                         errors.append("Incorrect email or password");

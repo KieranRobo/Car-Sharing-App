@@ -3,3 +3,11 @@
     justify-content: center;
 }
 
+.ui-content{
+    padding: 0;
+    position: absolute;
+    top: 90px;
+    right: 0;
+    bottom: 40px;
+    left: 0;
+}
