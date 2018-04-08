@@ -1,27 +1,32 @@
 $(document).one('pageinit', function () {
 
-    $('#findcontent').one("swipeleft", function () {
+    $('#findcontent').off("swipeleft").one("swipeleft", function () {
+        console.log("active");
         $.mobile.changePage("activerides.html");
     });
 
-    $('#findcontent').one("swiperight", function () {
+    $('#findcontent').off("swiperight").one("swiperight", function () {
+        console.log("create");
         $.mobile.changePage("create-ride.html");
     });
 
-    $('#activecontent').one("swiperight", function () {
+    $('#activecontent').off("swiperight").one("swiperight", function () {
+        console.log("find right");
         $.mobile.changePage("findride.html");
     });
 
-    $('#createcontent').one("swipeleft" ,function () {
+    $('#createcontent').off("swipeleft").one("swipeleft" ,function () {
+        console.log("find left");
         $.mobile.changePage("findride.html");
 
     });
 
-    $('.footer').one("click", function () {
+    $('.footer').off("click").one("click", function () {
+        console.log("acc");
         $.mobile.changePage("account.html", {transition: "slideup"});
     });
 
-    $('#dismissAcc').one("click", function () {
+    $('#dismissAcc').off("click").one("click", function () {
         //Change to previous page?
         $.mobile.changePage("findride.html", {transition: "slidedown"});
 
