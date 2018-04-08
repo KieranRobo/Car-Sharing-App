@@ -12,7 +12,7 @@
     <script type="text/javascript" src="js/create-ride.js"></script>
 
     <style>
-        #map {
+        .map {
             height: 15em;
             width: 100%;
         }
@@ -39,7 +39,8 @@
             <div id="ride-information">
                 <p>Before selecting route details of your ride, please provide some details to help others decide if
                     this ride is right for them:</p>
-                Time you are leaving at: <input type="text" id="time" /><br>
+                Date and Leaving Time:
+                <input type="datetime-local" id="time"><br>
                 Details about your ride (requirements, need-to-knows etc):<br> <textarea id="description"></textarea><br>
                 Vehicle: <input type="text" id="vehicle" /><br>
                 <button id="continue">Continue</button>
@@ -48,10 +49,9 @@
             <div id="location-selection">
                 <p id="instruction-area">Please select your <strong>pick-up point</strong>:</p>
 
-                <input type="text" name="search" id="search" />
-                <button id="search_button">Search</button>
+                <input type="text" name="search" id="search" placeholder="Search" />
 
-                <div id="map"></div>
+                <div id="map" class="map"></div>
 
                 <button id="submit-button">Continue</button>
                 <button id="back2">Go Back</button>
@@ -60,9 +60,9 @@
             <div id="confirmation">
                 <p>Please confirm the following information about your ride is correct:</p>
 
-                <p>Leaving from: <div id="confirmation-leaving-from"></div></p>
+                <p>Estimated Journey:</p>
+                <div id="map2" class="map"></div>
                 <p>At: <div id="confirmation-time"></div></p>
-                <p>Going to: <div id="confirmation-going-to"></div></p>
                 <p>With Vehicle: <div id="confirmation-vehicle"></div></p>
                 <p>Further Details:<br> <div id="confirmation-description"></div></p>
 

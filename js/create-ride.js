@@ -1,7 +1,13 @@
-var map;
+var map, map2;
+
+var centre;
+var setoffMarker, destMarker;
 var marker;
 
 var setoffMap, destinationMap;
+
+var directionsDisplay;
+var directionsService;
 
 $(document).ready(function() {
     setoffMap = null;
@@ -10,7 +16,7 @@ $(document).ready(function() {
 
     var setoffLat, setoffLng;
     var destinationLat, destinationLng;
-    var rideDestription;
+    var rideDestription, rideTime;
 
     $("#location-selection").hide();
     $("#confirmation").hide();
@@ -18,10 +24,27 @@ $(document).ready(function() {
 
     // Go from ride info screen to location selections
     $("#continue").on("click", function () {
-        $("#ride-information").hide();
-        $("#location-selection").show();
 
-        rideDestription = $("#description").val();
+        var inputTime = $("#time").val();
+        var inputDesc = $("#description").val();
+        var success = true;
+
+        if (inputTime == "") {
+            alert("You havent provided a time for the journey!");
+            success = false;
+        }
+        if (inputDesc == "") {
+            alert("It's important for you to provide details of this journey in the description");
+            success = false;
+        }
+
+        if (success) {
+            $("#ride-information").hide();
+            $("#location-selection").show();
+
+            rideDestription = inputDesc;
+            rideTime = inputTime;
+        }
     });
 
     // Go back from map to initial information screen
@@ -38,7 +61,7 @@ $(document).ready(function() {
 
     $("#submit-button").on("click", function () {
 
-        if (marker == null) {
+        if (!checkMarker()) {
             alert("Please select a location before continuing!");
         }
         else
@@ -46,20 +69,22 @@ $(document).ready(function() {
             if (destinationMap == null) {
                 $("#instruction-area").html("Finally, select your <strong>destination:</strong>");
 
-                setoffLat = marker.getPosition().lat();
-                setoffLng = marker.getPosition().lng();
-                destinationMap = initMap();
+                setoffLat = setoffMarker.getPosition().lat();
+                setoffLng = setoffMarker.getPosition().lng();
+                destinationMap = createMap('map', true);
+                //destinationMap = initMap();
             } else {
-                destinationLat = marker.getPosition().lat();
-                destinationLng = marker.getPosition().lng();
+                destinationLat = destMarker.getPosition().lat();
+                destinationLng = destMarker.getPosition().lng();
 
                 $("#location-selection").hide();
-
-                $("#confirmation-leaving-from").text("LAT: " + setoffLat + " LNG: " + setoffLng);
-                $("#confirmation-going-to").text("LAT: " + destinationLat + " LNG: " + destinationLng);
                 $("#confirmation-description").text(rideDestription);
+                $("#confirmation-time").text(rideTime);
 
                 $("#confirmation").show();
+
+                createMap('map2', false);
+                drawRoute();
 
                 //$("#content-area").html("Added ride information<br> SETOFF: " + setoffCoords + "<br>DEST: " + desintationCoords);
             }
@@ -75,7 +100,8 @@ $(document).ready(function() {
             setoffLng: setoffLng,
             destLat: destinationLat,
             destLng: destinationLng,
-            description: rideDestription};
+            description: rideDestription,
+            time: rideTime};
 
 
         $("#confirmation").hide();
@@ -92,16 +118,18 @@ $(document).ready(function() {
     });
 });
 
-this.initMap = function () {
-
-
+this.createMap = function(id, clickable) {
     var search = document.getElementById('search');
     var searchButton = document.getElementById('search_button');
 
-    var uluru = {lat: 55.864304, lng: -4.251686};
-    map = new google.maps.Map(document.getElementById('map'), {
+    directionsDisplay = new google.maps.DirectionsRenderer();
+    directionsService = new google.maps.DirectionsService();
+
+    centre = {lat: 55.864304, lng: -4.251686};
+
+    map = new google.maps.Map(document.getElementById(id), {
         zoom: 11,
-        center: uluru,
+        center: centre,
         componentRestrictions: {country: 'gb'}
     });
 
@@ -119,28 +147,92 @@ this.initMap = function () {
         });
     });
 
-    if (marker != null) {
+    if (setoffMarker != null) {
         new google.maps.Marker({
-            position: marker.getPosition(),
-            draggable:true,
+            position: setoffMarker.getPosition(),
+            draggable:false,
             map: map
         });
     }
 
-    map.addListener('click', function (event) {
-        moveMarker(event.latLng);
-    });
+    if (destMarker != null) {
+        new google.maps.Marker({
+            position: destMarker.getPosition(),
+            draggable:false,
+            map: map
+        });
+    }
+
+    if (clickable) {
+        map.addListener('click', function (event) {
+            moveMarker(event.latLng);
+        });
+    }
 
     return map;
 };
 
-this.moveMarker = function (coords) {
-    if (marker != null) {
-        marker.setMap(null);
-    }
-    marker = new google.maps.Marker({
-        position: coords,
-        draggable:true,
-        map: map
+
+this.drawRoute = function() {
+
+    var start = setoffMarker.getPosition();
+    var end = destMarker.getPosition();
+    var request = {
+        origin: start,
+        destination: end,
+        travelMode: google.maps.TravelMode.DRIVING
+    };
+    directionsService.route(request, function(result, status) {
+        if (status == google.maps.DirectionsStatus.OK) {
+            directionsDisplay.setDirections(result);
+            directionsDisplay.setMap(map);
+        } else {
+            alert("couldn't get directions:" + status);
+        }
     });
+}
+
+this.initMap = function () {
+
+    createMap('map', true);
+
+};
+
+this.checkMarker = function() {
+    if (setoffMarker == null) {
+        return false;
+    }else if (setoffMarker == null && destMarker == null) {
+        return false;
+    }
+    return true;
+};
+
+
+
+// markerMove: false for setoff, true for dest marker
+this.moveMarker = function (coords) {
+
+    if (setoffMarker != null && destMarker != null) {
+        setoffMarker.setMap(null);
+        destMarker.setMap(null);
+
+        setoffMarker = null;
+        destMarker = null;
+    }
+
+
+
+    if (setoffMarker == null) {
+        setoffMarker = new google.maps.Marker({
+            position: coords,
+            draggable:true,
+            map: map
+        });
+    } else {
+        destMarker = new google.maps.Marker({
+            position: coords,
+            draggable:true,
+            map: map
+        });
+    }
 };
