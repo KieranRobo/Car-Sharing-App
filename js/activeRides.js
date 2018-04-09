@@ -1,80 +1,61 @@
+
+
 $(document).one("pageinit" , function () {
     $.getJSON("control/ajax-handler.php?data=rides", function(data){
-
-            // $("#ride-data").append("ID: " + data[i].id + "<br>");
-            // $("#ride-data").append("Description: " + data[i].description + "<br>");
-            //
-            // $("#ride-data").append("<br>");
         for(var i=0; i<data.length; i++){
-            var seats = 0;
-            var time = data[i]['time'];
-            var from = data[i]['from_lat'] + ", " + data[i]['from_lng'];
-            var to = data[i]['to_lat'] + data[i]['to_lng'];
-            $('#active-rides-table').find('tbody').append("<tr><td>" + time + "</td><td id='from"+i+"'></td><td id='to"+i+"'></td><td>" + seats + "</td></tr>");
+            $('#active-rides-table').find('tbody').append("<tr id='row"+i+"'><td id='time"+i+"'></td>" +
+                                                                "<td id='from"+i+"'>" +
+                                                                "</td><td id='to"+i+"'>" +
+                                                                "</td><td id='seats"+i+"'></td></tr>");
+            $('#time' + i).append(data[i]['time']);
+            updateFrom(data[i]['setoff_location'], i);
+            updateTo(data[i]['dest_location'], i);
+            updateSeatsLeft(data[i]['vehicle'], i);
+            if(i%2 === 0)
+                $('#active-rides-table').find("tr").css('background-color', '#eaeaea');
+
+
+
         }
-        for(var i=0; i<data.length; i++) {
-            geocodeLatLng(data[i], i);
-            geocodeLatLngTo(parseFloat(data[i]['to_lat']), parseFloat(data[i]['to_lng']), i);
-        }
+        $('#active-rides-table').table("refresh");
+
 
     });
-
-    /*
-    $.ajax({
-        url: "control/ajax-handler.php?data=rides",
-        type: "POST",
-        beforeSend: function () {
-        },
-        success: function (result) {
-            //$("#ride-data").html(result);
-            parseJSON(result);
-        }
-    }).error(function () {
-        alert("wrong");
-    });
-    */
 });
 
-function geocodeLatLng(data, i) {
-    setTimeout(function () {
-        var geocoder = new google.maps.Geocoder;
-        var latlng = {lat: parseFloat(data['from_lat']), lng: parseFloat(data['from_lng'])};
-        geocoder.geocode({'location': latlng}, function(results, status) {
-            if (status === 'OK') {
-                if (results[0]) {
-                    $('#from'+i).append(results[0].formatted_address);
-
-                }
-            }else
-            if(status === "OVER_QUERY_LIMIT"){
-            }
-
-        });
-    }, i*2000);
-
+function updateSeatsLeft(vehicleID, tableRow) {
+    $.ajax({
+        url: 'control/ajax-handler.php',
+        type: 'POST',
+        data: "vehicleID="+vehicleID,
+        success: function (data) {
+            $('#seats' + tableRow).append(data);
+        }
+    });
 }
 
-function geocodeLatLngTo(lat, lng, i) {
-    setTimeout(function () {
-        var geocoder = new google.maps.Geocoder;
-        var latlng = {lat: lat, lng: lng};
-        geocoder.geocode({'location': latlng}, function(results, status) {
-            if (status === 'OK') {
-                if (results[0]) {
-                    $('#to'+i).append(results[0].formatted_address);
-                }
-            }else{
-                if(status === "OVER_QUERY_LIMIT"){
-                    setTimeout(function () {
-                        geocodeLatLngTo(lat, lng, i);
-                    }, 2000);
-                }
-
-            }
-        });
-    }, i*2000);
-
+function updateFrom(locationID, tableRow) {
+    $.ajax({
+        url: 'control/ajax-handler.php',
+        type: 'POST',
+        data: "locationID="+locationID,
+        success: function (data) {
+            $('#from' + tableRow).append(data);
+        }
+    });
 }
+
+function updateTo(locationID, tableRow) {
+    $.ajax({
+        url: 'control/ajax-handler.php',
+        type: 'POST',
+        data: "locationID="+locationID,
+        success: function (data) {
+            $('#to' + tableRow).append(data);
+        }
+    });
+}
+
 
 
 

@@ -1,7 +1,7 @@
 $(document).one('pageinit', function () {
 
     $('#findcontent').off("swipeleft").one("swipeleft", function () {
-        $.mobile.changePage("activerides.html");
+        $.mobile.changePage("myrides.html");
     });
 
     $('#findcontent').off("swiperight").one("swiperight", function () {
@@ -22,8 +22,6 @@ $(document).one('pageinit', function () {
     });
 
     $('#dismissAcc').off("click").one("click", function () {
-        //Change to previous page?
-        $.mobile.changePage("findride.html", {transition: "slidedown"});
-
+       history.back();
     });
 });
