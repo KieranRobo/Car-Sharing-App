@@ -43,7 +43,17 @@
                 Date and Leaving Time:
                 <input type="datetime-local" id="time"><br>
                 Details about your ride (requirements, need-to-knows etc):<br> <textarea id="description"></textarea><br>
-                Vehicle: <input type="text" id="vehicle" /><br>
+
+                <div class="ui-field-contain">
+                    <label for="vehicle">Vehicle:</label>
+                    <select name="vehicle" id="vehicle">
+                        <option value="0">-</option>
+                    </select>
+                    <div id="add-vehicle-text">It appears you don't have any vehicles linked to your account!</div>
+                    <a href="add-vehicle.html" data-rel="dialog"  data-transition="pop">Add New Vehicle</a>
+                </div>
+                <br>
+
                 <button id="continue">Continue</button>
             </div>
 
