@@ -44,7 +44,17 @@
                 Date and Leaving Time:
                 <input type="datetime-local" id="time"><br>
                 Details about your ride (requirements, need-to-knows etc):<br> <textarea id="description"></textarea><br>
-                Vehicle: <input type="text" id="vehicle" /><br>
+
+                <div class="ui-field-contain">
+                    <label for="vehicle">Vehicle:</label>
+                    <select name="vehicle" id="vehicle">
+                        <option value="1">Nissan Juke (5 seats)</option>
+                        <option value="2">Audi A3 (2 seats)</option>
+                    </select>
+
+                </div>
+                <br>
+
                 <button id="continue">Continue</button>
             </div>
 

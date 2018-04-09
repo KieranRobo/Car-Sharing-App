@@ -95,6 +95,9 @@ $(document).ready(function() {
     $("#confirm").on("click", function () {
         console.log(setoffMarker);
 
+        geocodeLatLngTo(setoffLat, setoffLng);
+        geocodeLatLngTo(destinationLat, destinationLng);
+
         // AJAX to create ride
         var postData = {
             setoffLat: setoffLat,
@@ -112,7 +115,7 @@ $(document).ready(function() {
             if (response == '1') {
                 $("#success").show();
             } else {
-                $("#content-area").html("Error whilst trying to add ride.");
+                $("#content-area").html("Error whilst trying to add ride:" + response);
             }
             });
 
@@ -171,6 +174,41 @@ this.createMap = function(id, clickable) {
     }
 
     return map;
+};
+
+
+// Attempts to fetche address for given latiude and longitude, and then sends address to updateAddress once complete.
+this.geocodeLatLngTo = function(lat, lng) {
+    setTimeout(function () {
+        var geocoder = new google.maps.Geocoder;
+        var latlng = {lat: lat, lng: lng};
+        geocoder.geocode({'location': latlng}, function(results, status) {
+            if (status === 'OK') {
+                if (results[0]) {
+                    updateAddress(lat, lng, results[0].formatted_address);
+                    return;
+                }
+            }else{
+                if(status === "OVER_QUERY_LIMIT"){
+                    setTimeout(function () {
+                        geocodeLatLngTo(lat, lng, i);
+                    }, 2000);
+                }
+
+            }
+        });
+    }, 2000);
+
+};
+
+this.updateAddress = function(lat, lng, address) {
+    var postData = {
+        latitude: lat,
+        longitude: lng,
+        address: address};
+
+    $.post("control/update-address-handler.php",
+        postData);
 };
 
 

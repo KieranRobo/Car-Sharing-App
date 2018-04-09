@@ -12,9 +12,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $dest_lat = $_POST['destLat'];
         $dest_lng = $_POST['destLng'];
 
+        $create_setoff_location = $conn->query("INSERT INTO `locations` (`longitude`, `latitude`, `address`) VALUES ($setoff_lng, $setoff_lat, '')");
+        $setoff_id = $conn->insert_id;
 
-        $create_ride = $conn->query("INSERT INTO `rides` (`from_lat`, `from_lng`, `to_lat`, `to_lng`, `time`, `vehicle`, `description`) VALUES
-                    ($setoff_lat, $setoff_lng, $dest_lat, $dest_lng, '$ride_time', 1, '$description')");
+        $create_dest_location = $conn->query("INSERT INTO `locations` (`longitude`, `latitude`, `address`) VALUES ($dest_lng, $dest_lat, '')");
+        $dest_id = $conn->insert_id;
+
+        $create_ride = $conn->query("INSERT INTO `rides` (`setoff_location`, `dest_location`, `time`, `vehicle`, `description`) VALUES
+                    ($setoff_id, $dest_id, '$ride_time', 1, '$description')");
         print "1";
     }
     else
