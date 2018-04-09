@@ -5,7 +5,7 @@ $(document).one('pageinit', function () {
         data: 'getLogin=true',
         success: function (data) {
             if (data !== 'already logged in') {
-                $.mobile.changePage("login.html");
+                window.location.href = "login.html";
             }
         }
     });

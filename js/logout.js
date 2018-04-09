@@ -7,7 +7,8 @@ $(document).one('pageinit', function () {
             success: function (data) {
                 console.log(data);
                 if(data === "success")
-                    $.mobile.navigate("login.html", {transition: "slide"})
+                    // $.mobile.navigate("login.html", {transition: "slide", forceReload: true}
+                    window.location.href = "login.html";
             }
 
         });
