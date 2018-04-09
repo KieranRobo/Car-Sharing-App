@@ -27,7 +27,23 @@
         </ul>
     </div><!-- /navbar -->
     <div id="activecontent" role="main" align="center" class="ui-content">
-        <p>Active Rides</p>
+        <table id="active-rides-table" data-role="table" data-mode="reflow" class="ui-responsive">
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Seats Left</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNgPG8RxuadW9QL-D3x3Rk4iT_ghLIAdE">
+        </script>
+        <script type="text/javascript" src="js/activeRides.js"></script>
+
     </div>
     <div class="footer" data-role="footer" data-position="fixed">
        Swipe up for Account details

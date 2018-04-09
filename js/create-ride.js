@@ -93,6 +93,7 @@ $(document).ready(function() {
     });
 
     $("#confirm").on("click", function () {
+        console.log(setoffMarker);
 
         // AJAX to create ride
         var postData = {

@@ -2,7 +2,6 @@
 include ("database.php");
 
 if ($_GET['data'] == "rides") {
-
     $rides = $conn->query("SELECT * FROM `rides`");
 
     $rows = array();
