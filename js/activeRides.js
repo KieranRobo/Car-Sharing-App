@@ -3,7 +3,7 @@
 $(document).one("pageinit" , function () {
     $.getJSON("control/ajax-handler.php?data=rides", function(data){
         for(var i=0; i<data.length; i++){
-            $('#active-rides-table').find('tbody').append("<tr id='row"+i+"'><td id='time"+i+"'></td>" +
+            $('#active-rides-table').find('tbody').append("<tr onclick='showInfo();' id='row"+i+"'><td id='time"+i+"'></td>" +
                                                                 "<td id='from"+i+"'>" +
                                                                 "</td><td id='to"+i+"'>" +
                                                                 "</td><td id='seats"+i+"'></td></tr>");
@@ -12,7 +12,7 @@ $(document).one("pageinit" , function () {
             updateTo(data[i]['dest_location'], i);
             updateSeatsLeft(data[i]['vehicle'], i);
             if(i%2 === 0)
-                $('#active-rides-table').find("tr").css('background-color', '#eaeaea');
+                $('#row'+i).css('background-color', '#d3d3d3');
 
 
 
@@ -22,6 +22,10 @@ $(document).one("pageinit" , function () {
 
     });
 });
+
+function showInfo() {
+    $.mobile.changePage('ride-details.html', 'pop', true, true);
+}
 
 function updateSeatsLeft(vehicleID, tableRow) {
     $.ajax({
