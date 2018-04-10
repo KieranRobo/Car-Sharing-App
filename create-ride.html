@@ -49,7 +49,7 @@
                     <select name="vehicle" id="vehicle">
                         <option value="0">-</option>
                     </select>
-                    <div id="add-vehicle-text">It appears you don't have any vehicles linked to your account!</div>
+                    <div id="add-vehicle-text"></div>
                     <a href="add-vehicle.html" data-rel="dialog"  data-transition="pop">Add New Vehicle</a>
                 </div>
                 <br>
@@ -71,11 +71,11 @@
             <div id="confirmation">
                 <p>Please confirm the following information about your ride is correct:</p>
 
-                <p>Estimated Journey:</p>
+                <strong>Estimated Journey:</strong>
                 <div id="map2" class="map"></div>
-                <p>At: <div id="confirmation-time"></div></p>
-                <p>With Vehicle: <div id="confirmation-vehicle"></div></p>
-                <p>Further Details:<br> <div id="confirmation-description"></div></p>
+                <strong>At:</strong> <div id="confirmation-time"></div><br>
+                <strong>With Vehicle:</strong> <div id="confirmation-vehicle"></div><br>
+                <strong>Further Details:</strong><br> <div id="confirmation-description"></div>
 
                 <button id="confirm">These Details Are Correct</button>
                 <button id="back3">Go Back</button>

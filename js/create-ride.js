@@ -17,16 +17,23 @@ $(document).ready(function() {
     var setoffLat, setoffLng;
     var destinationLat, destinationLng;
     var rideDestription, rideTime;
+    var vehicleID, vehicleDesc;
 
     $("#location-selection").hide();
     $("#confirmation").hide();
     $("#success").hide();
+
+    // Load in users' vehicles to the dropdown
+    reloadVehicles();
+
 
     // Go from ride info screen to location selections
     $("#continue").on("click", function () {
 
         var inputTime = $("#time").val();
         var inputDesc = $("#description").val();
+        var inputVehicle = $("#vehicle").val();
+        var inputVehicleDesc = $("#vehicle option:selected").text();
         var success = true;
 
         if (inputTime == "") {
@@ -44,6 +51,8 @@ $(document).ready(function() {
 
             rideDestription = inputDesc;
             rideTime = inputTime;
+            vehicleID = inputVehicle;
+            vehicleDesc = inputVehicleDesc;
         }
     });
 
@@ -79,6 +88,7 @@ $(document).ready(function() {
 
                 $("#location-selection").hide();
                 $("#confirmation-description").text(rideDestription);
+                $("#confirmation-vehicle").text(vehicleDesc);
                 $("#confirmation-time").text(rideTime);
 
                 $("#confirmation").show();
@@ -105,6 +115,7 @@ $(document).ready(function() {
             destLat: destinationLat,
             destLng: destinationLng,
             description: rideDestription,
+            vehicle: vehicleID,
             time: rideTime};
 
 
@@ -121,6 +132,28 @@ $(document).ready(function() {
 
     });
 });
+
+this.updateVehiclesText = function() {
+    $.get( "control/ajax-handler.php?data=vehicles", function( data ) {
+        if (data == "NONE-FOUND") {
+            $("#add-vehicle-text").html("It appears you don't have any vehicles linked to your account!");
+            return true;
+        }
+    });
+    return false;
+};
+
+this.reloadVehicles = function() {
+    $("#vehicle").html("<option value='0'>---</option>");
+    $.getJSON("control/ajax-handler.php?data=vehicles", function(data){
+        for (var i = 0, len = data.length; i < len; i++) {
+            $("#vehicle").append("<option value="+ data[i].id +">"+ data[i].type + " (" + data[i].seats + " seats)</option>");
+        }
+    });
+
+    updateVehiclesText();
+    $('#vehicle').selectmenu('refresh');
+};
 
 this.createMap = function(id, clickable) {
     var search = document.getElementById('search');

@@ -50,6 +50,7 @@ $(document).ready(function() {
                 url: "control/add-vehicle-handler.php",
                 data: postData,
                 success: function (data) {
+                    reloadVehicles(data);
                     console.log(data);
                     $('[data-role=dialog]').dialog("close");
                     $('#add-vehicle-text').html("");
@@ -59,3 +60,20 @@ $(document).ready(function() {
 
     });
 });
+
+
+this.reloadVehicles = function(selectedId) {
+    $("#vehicle").html("<option value='0'>---</option>");
+    $.getJSON("control/ajax-handler.php?data=vehicles", function(data){
+        for (var i = 0, len = data.length; i < len; i++) {
+            if (data[i].id == selectedId) {
+                // Making option selected is kinda buggy right now.  Commented out till fixed.
+                // $("#vehicle").append("<option value="+i+" selected>"+ data[i].type + " (" + data[i].seats + " seats)</option>");
+                $("#vehicle").append("<option value=" + i + ">" + data[i].type + " (" + data[i].seats + " seats)</option>");
+            } else {
+                $("#vehicle").append("<option value=" + i + ">" + data[i].type + " (" + data[i].seats + " seats)</option>");
+            }
+        }
+    });
+    $('#vehicle').selectmenu('refresh');
+};

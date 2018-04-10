@@ -1,4 +1,5 @@
 <?php
+session_start();
 include ("database.php");
 
 if (isset($_GET['data']) && $_GET['data'] == "rides") {
@@ -9,6 +10,20 @@ if (isset($_GET['data']) && $_GET['data'] == "rides") {
         $rows[] = $r;
     }
     print json_encode($rows);
+}
+
+if (isset($_GET['data']) && $_GET['data'] == "vehicles") {
+    $rides = $conn->query("SELECT * FROM `vehicles` WHERE `owner` = {$_SESSION['userID']}");
+
+    if ($rides->num_rows > 0) {
+        $rows = array();
+        while ($r = $rides->fetch_array()) {
+            $rows[] = $r;
+        }
+        print json_encode($rows);
+    } else {
+        print "NONE-FOUND";
+    }
 }
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){

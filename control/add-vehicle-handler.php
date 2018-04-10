@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $create_vehicle = $conn->query("INSERT INTO `vehicles` (`owner`, `seats`, `type`, `reg`) VALUES ({$_SESSION['userID']}, $seats, '$model', '$registration')");
 
-        print "1";
+        print $conn->insert_id;
     }
     else
     {
