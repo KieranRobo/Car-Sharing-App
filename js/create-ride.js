@@ -9,7 +9,7 @@ var setoffMap, destinationMap;
 var directionsDisplay;
 var directionsService;
 
-$(document).ready(function() {
+$(document).one('pageinit', function() {
     setoffMap = null;
     destinationMap = null;
     marker = null;
@@ -48,7 +48,7 @@ $(document).ready(function() {
         if (success) {
             $("#ride-information").hide();
             $("#location-selection").show();
-
+            initMap();
             rideDestription = inputDesc;
             rideTime = inputTime;
             vehicleID = inputVehicle;

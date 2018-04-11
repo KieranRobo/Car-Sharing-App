@@ -1,11 +1,10 @@
 $(document).one('pageinit', function () {
-    console.log("ayy");
     $('#findcontent').off("swipeleft").one("swipeleft", function () {
         $.mobile.changePage("myrides.html");
     });
 
     $('#findcontent').off("swiperight").one("swiperight", function () {
-        $.mobile.changePage("create-ride.html");
+        window.location.href = "create-ride.html";
     });
 
     $('#my-rides-contentgi').off("swiperight").one("swiperight", function () {
