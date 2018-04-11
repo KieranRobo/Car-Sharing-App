@@ -7,7 +7,7 @@ $(document).one('pageinit', function () {
         window.location.href = "create-ride.html";
     });
 
-    $('#my-rides-contentgi').off("swiperight").one("swiperight", function () {
+    $('#my-rides-content').off("swiperight").one("swiperight", function () {
         $.mobile.changePage("findride.html");
     });
 
