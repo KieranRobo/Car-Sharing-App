@@ -1,5 +1,5 @@
 $(document).one('pageinit', function () {
-
+    console.log("ayy");
     $('#findcontent').off("swipeleft").one("swipeleft", function () {
         $.mobile.changePage("myrides.html");
     });
@@ -8,7 +8,7 @@ $(document).one('pageinit', function () {
         $.mobile.changePage("create-ride.html");
     });
 
-    $('#activecontent').off("swiperight").one("swiperight", function () {
+    $('#my-rides-contentgi').off("swiperight").one("swiperight", function () {
         $.mobile.changePage("findride.html");
     });
 
