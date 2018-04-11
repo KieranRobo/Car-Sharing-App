@@ -8,19 +8,54 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="js/checkLoggedIn.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNgPG8RxuadW9QL-D3x3Rk4iT_ghLIAdE&libraries=places"></script>
     <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 </head>
 <body>
 <!-- Popup for maps -->
-<div data-role="dialog" id="info">
-    <div data-role="header">
-        <h1>Ride Details</h1>
-    </div>
-    <div role="main">
-        <p>Put Map Here</p>
-        <p>Maybe more details - e.g car details, driver name etc...</p>
-        <button>Apply for Ride</button>
-    </div>
+<<div data-role="page" id="map-page">
+        <div data-role="header" class="ui" data-position="fixed">
+        <h1>Maps</h1>
+        </div>
+        <div role="main" class="ui-content" >
+            <div id="map-canvas">
+
+            </div>
+            <!-- map loads here... -->
+        </div>
+    <script>
+        $( document ).one( "pageinit", function() {
+            var defaultLatLng = new google.maps.LatLng(34.0983425, -118.3267434);  // Default to Hollywood, CA when no geolocation support
+            // if ( navigator.geolocation ) {
+            //     function success(pos) {
+            //         // Location found, show map with these coordinates
+            //         drawMap(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+            //     }
+            //     function fail(error) {
+            //         drawMap(defaultLatLng);  // Failed to find location, show default map
+            //     }
+            //     // Find the users current position.  Cache the location for 5 minutes, timeout after 6 seconds
+            //     navigator.geolocation.getCurrentPosition(success, fail, {maximumAge: 500000, enableHighAccuracy:true, timeout: 6000});
+            // } else {
+                drawMap(defaultLatLng);  // No geolocation support, show default map
+            // }
+            function drawMap(latlng) {
+                var myOptions = {
+                    zoom: 10,
+                    center: latlng,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                };
+                var map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
+                // Add an overlay to the map of current lat/lng
+                var marker = new google.maps.Marker({
+                    position: latlng,
+                    map: map,
+                    title: "Greetings!"
+                });
+            }
+        });
+    </script>
 </div>
+
 </body>
 </html>
