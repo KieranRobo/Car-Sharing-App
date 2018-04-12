@@ -24,8 +24,12 @@ $(document).one("pageinit" , function () {
 });
 
 function showInfo(rideId) {
-    window.console.log('ride-details.html?id='+rideId);
-    $.mobile.changePage('ride-details.html?id='+rideId, 'pop', true, true);
+  //  window.console.log('ride-details.html?id='+rideId);
+    var pagename = "ride-details.html?id="+rideId;
+    window.console.log(pagename);
+   // $.mobile.changePage(pagename, {transition:"pop"});
+$.mobile.pageContainer.pagecontainer("change","ride-details.html?id="+rideId,{transition:"pop"});
+
 }
 
 function updateSeatsLeft(vehicleID, tableRow) {
