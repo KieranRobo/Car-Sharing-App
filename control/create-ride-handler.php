@@ -6,7 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (isset($_POST)) {
         $description = strip_tags($_POST['description']);
-        $ride_time = $_POST['time'];
+        $ride_time = strtotime($_POST['time']);
         $setoff_lat = $_POST['setoffLat'];
         $setoff_lng = $_POST['setoffLng'];
         $dest_lat = $_POST['destLat'];
@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $dest_id = $conn->insert_id;
 
         $create_ride = $conn->query("INSERT INTO `rides` (`setoff_location`, `dest_location`, `time`, `vehicle`, `description`) VALUES
-                    ($setoff_id, $dest_id, '$ride_time', $vehicle, '$description')");
+                    ($setoff_id, $dest_id, $ride_time, $vehicle, '$description')");
         print "1";
     }
     else

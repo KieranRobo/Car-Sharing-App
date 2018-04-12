@@ -12,6 +12,26 @@ if (isset($_GET['data']) && $_GET['data'] == "rides") {
     print json_encode($rows);
 }
 
+if (isset($_GET['id']) && $_GET['data'] == "ride") {
+    $ride = $conn->query("SELECT * FROM `rides` WHERE `id` = {$_GET['id']}");
+
+    $rows = array();
+    while ($r = $ride->fetch_array()) {
+        $rows[] = $r;
+    }
+    print json_encode($rows);
+}
+
+if (isset($_GET['id']) && $_GET['data'] == "location") {
+    $location = $conn->query("SELECT * FROM `locations` WHERE `id` = {$_GET['id']}");
+
+    $rows = array();
+    while ($l = $location->fetch_array()) {
+        $rows[] = $l;
+    }
+    print json_encode($rows);
+}
+
 if(isset($_SESSION['userID']) && isset($_GET['data']) && $_GET['data'] == 'myrides'){
     $result = $conn->query("SELECT ride_id FROM passengers WHERE user_id = ".$_SESSION['userID']);
     $rideID = array();
@@ -83,4 +103,5 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         echo $seatsTotal-$num;
     }
 }
+
 

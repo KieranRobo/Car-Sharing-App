@@ -262,7 +262,7 @@ this.drawRoute = function() {
             alert("couldn't get directions:" + status);
         }
     });
-}
+};
 
 this.initMap = function () {
 

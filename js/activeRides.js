@@ -3,7 +3,7 @@
 $(document).one("pageinit" , function () {
     $.getJSON("control/ajax-handler.php?data=rides", function(data){
         for(var i=0; i<data.length; i++){
-            $('#active-rides-table').find('tbody').append("<tr onclick='showInfo();' id='row"+i+"'><td id='time"+i+"'></td>" +
+            $('#active-rides-table').find('tbody').append("<tr onclick='+showInfo("+data[i]['id']+");' id='row"+i+"'><td id='time"+i+"'></td>" +
                                                                 "<td id='from"+i+"'>" +
                                                                 "</td><td id='to"+i+"'>" +
                                                                 "</td><td id='seats"+i+"'></td></tr>");
@@ -23,8 +23,9 @@ $(document).one("pageinit" , function () {
     });
 });
 
-function showInfo() {
-    $.mobile.changePage('ride-details.html', 'pop', true, true);
+function showInfo(rideId) {
+    window.console.log('ride-details.html?id='+rideId);
+    $.mobile.changePage('ride-details.html?id='+rideId, 'pop', true, true);
 }
 
 function updateSeatsLeft(vehicleID, tableRow) {
