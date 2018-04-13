@@ -3,10 +3,11 @@
 $(document).one("pageinit" , function () {
     $.getJSON("control/ajax-handler.php?data=rides", function(data){
         for(var i=0; i<data.length; i++){
-            $('#active-rides-table').find('tbody').append("<tr onclick='+showInfo("+data[i]['id']+");' id='row"+i+"'><td id='time"+i+"'></td>" +
+            //onclick='+showInfo("+data[i]['id']+");'
+            $('#active-rides-table').find('tbody').append("<tr id='row"+i+"'><td id='time"+i+"'></td>" +
                                                                 "<td id='from"+i+"'>" +
                                                                 "</td><td id='to"+i+"'>" +
-                                                                "</td><td id='seats"+i+"'></td></tr>");
+                                                                "</td><td id='seats"+i+"'></td><td><input onclick='joinRide("+data[i]['id']+")' type='button' value='Join'></td></tr>");
             $('#time' + i).append(data[i]['time']);
             updateFrom(data[i]['setoff_location'], i);
             updateTo(data[i]['dest_location'], i);
@@ -22,6 +23,21 @@ $(document).one("pageinit" , function () {
 
     });
 });
+
+function joinRide(rideId) {
+    $.ajax({
+        url: 'control/ajax-handler.php',
+        type: 'POST',
+        data: 'rideID='+rideId,
+        success: function (data) {
+            console.log(data);
+        }
+    });
+
+
+
+
+}
 
 function showInfo(rideId) {
   //  window.console.log('ride-details.html?id='+rideId);
@@ -49,6 +65,7 @@ function updateFrom(locationID, tableRow) {
         type: 'POST',
         data: "locationID="+locationID,
         success: function (data) {
+            console.log("data");
             $('#from' + tableRow).append(data);
         }
     });

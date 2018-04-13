@@ -93,7 +93,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $stmt->fetch();
         $stmt->close();
 
-        $stmt = $conn->prepare("SELECT id FROM passengers WHERE id = ?");
+        $stmt = $conn->prepare("SELECT id FROM passengers WHERE ride_id = ?");
         $stmt->bind_param("s", $_POST['vehicleID']);
         $stmt->execute();
         $stmt->store_result();
@@ -102,6 +102,15 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         echo $seatsTotal-$num;
     }
+
+    if(isset($_POST['rideID']) && $_POST['rideID'] != ''){
+        $rideID = $_POST['rideID'];
+        $userID = $_SESSION['userID'];
+       $conn->query("INSERT INTO passengers (`id`, `ride_id`, `user_id`)
+                            VALUES (null ,$rideID, $userID)");
+
+    }
+
 }
 
 
