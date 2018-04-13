@@ -3,7 +3,7 @@ session_start();
 include ("database.php");
 
 if (isset($_GET['data']) && $_GET['data'] == "rides") {
-    $rides = $conn->query("SELECT * FROM `rides`");
+    $rides = $conn->query("SELECT * FROM `rides` w");
 
     $rows = array();
     while ($r = $rides->fetch_array()) {
@@ -110,8 +110,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     if(isset($_POST['rideID']) && $_POST['rideID'] != ''){
         $rideID = $_POST['rideID'];
         $userID = $_SESSION['userID'];
-       $conn->query("INSERT INTO passengers (`id`, `ride_id`, `user_id`)
-                            VALUES (null ,$rideID, $userID)");
+        $result = $conn->query("SELECT * FROM passengers WHERE ride_id = $rideID && user_id = $userID");
+        if($result->num_rows != 0)
+            echo "fail";
+        else
+           $conn->query("INSERT INTO passengers (`id`, `ride_id`, `user_id`)
+                                VALUES (null ,$rideID, $userID)");
 
     }
 

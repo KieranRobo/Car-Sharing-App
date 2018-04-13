@@ -31,7 +31,10 @@ function joinRide(rideId) {
         type: 'POST',
         data: 'rideID='+rideId,
         success: function (data) {
-            window.location.href = "findride.html";
+            if(data === "fail"){
+                alert("You have already joined this ride");
+            }else
+                window.location.href = "findride.html";
         }
     });
 
