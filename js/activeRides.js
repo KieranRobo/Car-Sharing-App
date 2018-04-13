@@ -1,6 +1,7 @@
 
 
 $(document).one("pageinit" , function () {
+    console.log("a");
     $.getJSON("control/ajax-handler.php?data=rides", function(data){
         for(var i=0; i<data.length; i++){
             //onclick='+showInfo("+data[i]['id']+");'
@@ -11,7 +12,7 @@ $(document).one("pageinit" , function () {
             $('#time' + i).append(data[i]['time']);
             updateFrom(data[i]['setoff_location'], i);
             updateTo(data[i]['dest_location'], i);
-            updateSeatsLeft(data[i]['vehicle'], i);
+            updateSeatsLeft(data[i]['id'], i);
             if(i%2 === 0)
                 $('#row'+i).css('background-color', '#d3d3d3');
 
@@ -30,7 +31,7 @@ function joinRide(rideId) {
         type: 'POST',
         data: 'rideID='+rideId,
         success: function (data) {
-            console.log(data);
+            window.location.href = "findride.html";
         }
     });
 
@@ -54,7 +55,10 @@ function updateSeatsLeft(vehicleID, tableRow) {
         type: 'POST',
         data: "vehicleID="+vehicleID,
         success: function (data) {
-            $('#seats' + tableRow).append(data);
+            if(data == 0){
+                $('#row' + tableRow).remove();
+            }else
+             $('#seats' + tableRow).append(data);
         }
     });
 }
