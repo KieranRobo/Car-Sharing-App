@@ -9,6 +9,9 @@ if (isset($_GET['data']) && $_GET['data'] == "rides") {
     while ($r = $rides->fetch_array()) {
         $rows[] = $r;
     }
+    for($i = 0; $i<sizeof($rows); $i++){
+        $rows[$i]['time'] = date('d/m/Y H:i', $rows[$i]['time']);
+    }
     print json_encode($rows);
 }
 
@@ -19,6 +22,7 @@ if (isset($_GET['id']) && $_GET['data'] == "ride") {
     while ($r = $ride->fetch_array()) {
         $rows[] = $r;
     }
+
     print json_encode($rows);
 }
 
@@ -54,7 +58,7 @@ if(isset($_SESSION['userID']) && isset($_GET['data']) && $_GET['data'] == 'myrid
     }
     $data = array();
     for($i = 0; $i<sizeof($rides); $i++){
-        $data[] = array('time' => $rides[$i]['time'], 'location' => $location[$i]['address']);
+        $data[] = array('time' => date('d/m/Y H:i', $rides[$i]['time']), 'location' => $location[$i]['address']);
     }
     print json_encode($data);
 
