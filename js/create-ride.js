@@ -91,8 +91,8 @@ $(document).one('pageinit', function() {
                 $("#confirmation-vehicle").text(vehicleDesc);
                 $("#confirmation-time").text(rideTime);
 
-                $().show();
-                "#confirmation"
+                $("#confirmation").show();
+
                 createMap('map2', false);
                 drawRoute();
 
