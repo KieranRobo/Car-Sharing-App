@@ -66,7 +66,6 @@
         }
 
         this.drawRoute = function(setoff, dest) {
-
             var request = {
                 origin: setoff,
                 destination: dest,
@@ -80,6 +79,7 @@
                     alert("couldn't get directions:" + status);
                 }
             });
+
         };
 
 
@@ -101,7 +101,7 @@
 
             $.getJSON("control/ajax-handler.php?data=ride&id=" + $.param('id'), function(data){
 
-                for(var i=0; i<data.length-1; i++){
+                for(var i=0; i<data.length; i++){
                     id = data[i]['id'];
                     setoff_location = data[i]['setoff_location'];
                     dest_location = data[i]['dest_location'];

@@ -8,7 +8,8 @@ $(document).one("pageinit" , function () {
             $('#active-rides-table').find('tbody').append("<tr id='row"+i+"'><td id='time"+i+"'></td>" +
                                                                 "<td id='from"+i+"'>" +
                                                                 "</td><td id='to"+i+"'>" +
-                                                                "</td><td id='seats"+i+"'></td><td><input onclick='joinRide("+data[i]['id']+")' type='button' value='Join'></td></tr>");
+                                                                "</td><td id='seats"+i+"'></td><td><input onclick='joinRide("+data[i]['id']+")' type='button' value='Join'></td>" +
+                "<td><a href='ride-details.html?id=" + data[i]['id'] + "' rel='external'>View Route</a></td></tr>");
             $('#time' + i).append(data[i]['time']);
             updateFrom(data[i]['setoff_location'], i);
             updateTo(data[i]['dest_location'], i);
